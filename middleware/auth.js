@@ -6,5 +6,8 @@ module.exports = function auth(req, res, next) {
   }
   let decoded = jwt.verify(token, "ash");
   req.user = decoded;
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
   next();
 };

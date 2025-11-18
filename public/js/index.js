@@ -123,3 +123,21 @@ if (loginForm) {
     }
   });
 }
+
+let postForm = document.getElementById("postForm");
+if (postForm) {
+  postForm.addEventListener("submit", async (e) => {
+    let content = document.getElementById("content").value;
+    e.preventDefault();
+    let response = await fetch("/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content }),
+    });
+    let data = await response.json();
+    if (data.success) {
+      alert(data.message);
+      window.location.href = "/profile";
+    }
+  });
+}
