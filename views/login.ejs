@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <div class="w-full min-h-screen bg-zinc-800 text-white p-10">
+      <h2>Login</h2>
+      <form id="loginform">
+        <label class="block mt-2" for="email">Email</label>
+        <input
+          class="mt-1 block px-2 py-1 outline-none bg-transparent rounded-xl border-1 border-zinc-900"
+          type="email"
+          id="email"
+          placeholder="Enter Your Email"
+          name="email"
+        />
+        <span id="emailError" class="error text-red-600"></span>
+        <label class="block mt-3" for="password">password</label>
+        <input
+          class="mt-1 block px-2 py-1 outline-none bg-transparent rounded-xl border-1 border-zinc-900"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter your password"
+        />
+        <span id="passwordError" class="error text-red-600"></span>
+        <input
+          class="block mt-3 bg-blue-800 px-2 py-1 rounded-xl"
+          type="submit"
+          value="login"
+        />
+      </form>
+      <span id="errormessage" class="error text-red-600"></span>
+      <a class="inline-block mt-4 text-blue-400" href="/">
+        Click here to Signup</a
+      >
+    </div>
+  </body>
+  <script src="/js/index.js"></script>
+</html>
