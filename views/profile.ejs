@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body>
-    <h1>Welcome user</h1>
+    <h1>Welcome <%=user.username%></h1>
+    <h2>email <%=user.email%></h2>
+    <a
+      class="px-2 py-1 bg-blue-400 rounded-xl border-1 border-blue-300"
+      href="/logout"
+      >Logout</a
+    >
   </body>
 </html>

@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("../middleware/auth");
 const router = express.Router();
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
@@ -9,8 +10,9 @@ router.get("/", (req, res) => {
 router.get("/login", (req, res) => {
   res.render("login");
 });
-router.get("/profile", (req, res) => {
-  res.render("profile");
+router.get("/profile", auth, async (req, res) => {
+  let user = await User.findOne({ email: req.user.email });
+  res.render("profile", { user });
 });
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
@@ -39,5 +41,9 @@ router.post("/login", async (req, res) => {
   let token = jwt.sign({ email, user: user._id }, "ash");
   res.cookie("token", token);
   res.status(201).json({ success: true, message: "user login successfuly" });
+});
+router.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.redirect("/login");
 });
 module.exports = router;
