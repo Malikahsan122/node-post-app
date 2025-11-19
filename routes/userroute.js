@@ -13,8 +13,17 @@ router.get("/login", (req, res) => {
 });
 router.get("/profile", auth, async (req, res) => {
   let user = await User.findOne({ email: req.user.email }).populate("posts");
-  console.log(user);
   res.render("profile", { user });
+});
+router.get("/like/:id", auth, async (req, res) => {
+  let post = await postModel.findById(req.params.id).populate("user");
+  if (post.likes.indexOf(req.user.user) == -1) {
+    post.likes.push(req.user.user);
+  } else {
+    post.likes.splice(post.likes.indexOf(req.user.user), 1);
+  }
+  await post.save();
+  res.redirect("/profile");
 });
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
