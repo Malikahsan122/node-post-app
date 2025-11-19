@@ -88,7 +88,13 @@ router.put("/edit/:id", auth, async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
-
+router.get("/delete/:id", auth, async (req, res) => {
+  await postModel.findByIdAndDelete(req.params.id);
+  await User.findByIdAndUpdate(req.user.user, {
+    $pull: { posts: req.params.id },
+  });
+  res.redirect("/profile");
+});
 router.get("/logout", (req, res) => {
   res.clearCookie("token");
   res.redirect("/login");
