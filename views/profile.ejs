@@ -15,17 +15,29 @@
           >Logout</a
         >
       </div>
-      <h2 class="mb-6">posts</h2>
+      <h2 class="mb-6">hey <%=user.username%> Welcome Create your posts</h2>
       <form id="postForm">
         <textarea
           class="w-1/3 resize-none bg-transparent outline-none border-1 border-zinc-700 px-2 py-1"
           name="content"
           id="content"
-        ></textarea>
+        >
+<%= editPost ? editPost.content : '' %></textarea
+        >
+        <input
+          type="hidden"
+          id="editing"
+          value="<%= editPost ? 'true' : 'false' %>"
+        />
+        <input
+          type="hidden"
+          id="editId"
+          value="<%= editPost ? editPost._id : '' %>"
+        />
         <input
           class="block bg-blue-500 rounded-xl px-2 py-1"
           type="submit"
-          value="Create post"
+          value="<%= editPost ? 'Update Post' : 'Create Post' %>"
         />
       </form>
       <div class="post mt-10">
@@ -43,8 +55,8 @@
             <div>
               <a
                 class="inline-block bg-blue-400 rounded-xl px-2 py-1"
-                href="/edit"
-                >Edit</a
+                href="/edit/<%= post._id%>"
+                >Update</a
               >
               <a
                 class="inline-block bg-blue-400 rounded-xl px-2 py-1"

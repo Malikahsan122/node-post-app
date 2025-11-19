@@ -127,10 +127,14 @@ if (loginForm) {
 let postForm = document.getElementById("postForm");
 if (postForm) {
   postForm.addEventListener("submit", async (e) => {
-    let content = document.getElementById("content").value;
     e.preventDefault();
-    let response = await fetch("/profile", {
-      method: "POST",
+    let content = document.getElementById("content").value;
+    let editing = document.getElementById("editing").value === "true";
+    let editId = document.getElementById("editId").value;
+    let url = editing ? `/edit/${editId}` : "/profile";
+    let method = editing ? "PUT" : "POST";
+    let response = await fetch(url, {
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
     });

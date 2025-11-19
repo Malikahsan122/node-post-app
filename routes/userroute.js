@@ -13,7 +13,7 @@ router.get("/login", (req, res) => {
 });
 router.get("/profile", auth, async (req, res) => {
   let user = await User.findOne({ email: req.user.email }).populate("posts");
-  res.render("profile", { user });
+  res.render("profile", { user, editPost: null });
 });
 router.get("/like/:id", auth, async (req, res) => {
   let post = await postModel.findById(req.params.id).populate("user");
@@ -24,6 +24,13 @@ router.get("/like/:id", auth, async (req, res) => {
   }
   await post.save();
   res.redirect("/profile");
+});
+router.get("/edit/:id", auth, async (req, res) => {
+  let user = await User.findOne({ email: req.user.email }).populate("posts");
+  const editPost = user.posts.find(
+    (post) => post._id.toString() === req.params.id
+  );
+  res.render("profile", { user, editPost });
 });
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
@@ -70,6 +77,18 @@ router.post("/profile", auth, async (req, res) => {
     console.log(e.message);
   }
 });
+router.put("/edit/:id", auth, async (req, res) => {
+  try {
+    await postModel.findByIdAndUpdate(req.params.id, {
+      content: req.body.content,
+    });
+
+    res.json({ success: true, message: "Post updated successfully" });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 router.get("/logout", (req, res) => {
   res.clearCookie("token");
   res.redirect("/login");
